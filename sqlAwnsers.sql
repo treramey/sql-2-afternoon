@@ -192,3 +192,47 @@ VALUES
 
 INSERT INTO orders (product_id)
 VALUES (1), (2), (3);
+
+
+SELECT * FROM products AS p
+INNER JOIN orders AS o
+ON p.id = o.id
+WHERE o.id = 1;
+
+SELECT * FROM orders;
+
+SELECT o.id, SUM(p.price)
+FROM products AS p
+INNER JOIN orders AS o 
+ON p.id = o.id
+WHERE o.id = 3
+GROUP BY o.id;
+
+
+ALTER TABLE users
+ADD COLUMN order_id INTEGER
+REFERENCES orders(id);
+
+UPDATE users
+SET order_id = 1
+WHERE id = 1;
+
+UPDATE users
+SET order_id = 2
+WHERE id = 2;
+
+UPDATE users
+SET order_id = 3
+WHERE id = 3;
+
+
+SELECT * FROM users AS u
+INNER JOIN orders AS o
+ON o.id = u.order_id
+WHERE u.id = 3;
+
+
+SELECT COUNT(*) FROM users AS u
+INNER JOIN orders AS o
+ON o.id = u.order_id
+WHERE u.id = 2;
